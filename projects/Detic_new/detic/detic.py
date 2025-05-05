@@ -107,7 +107,7 @@ def reset_cls_layer_weight(roi_head, weight):
         [zs_weight, zs_weight.new_zeros(
             (zs_weight.shape[0], 1))], dim=1)  # D x (C + 1)
     zs_weight = F.normalize(zs_weight, p=2, dim=0)
-    zs_weight = zs_weight.to('cuda')
+    zs_weight = zs_weight.to('cpu')
     num_classes = zs_weight.shape[-1]
 
     for bbox_head in roi_head.bbox_head:

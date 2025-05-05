@@ -39,14 +39,14 @@ class PointGenerator:
     def grid_points(self,
                     featmap_size: Tuple[int, int],
                     stride=16,
-                    device: DeviceType = 'cuda') -> Tensor:
+                    device: DeviceType = 'cpu') -> Tensor:
         """Generate grid points of a single level.
 
         Args:
             featmap_size (tuple[int, int]): Size of the feature maps.
             stride (int): The stride of corresponding feature map.
             device (str | torch.device): The device the tensor will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: grid point in a feature map.
@@ -63,7 +63,7 @@ class PointGenerator:
     def valid_flags(self,
                     featmap_size: Tuple[int, int],
                     valid_size: Tuple[int, int],
-                    device: DeviceType = 'cuda') -> Tensor:
+                    device: DeviceType = 'cpu') -> Tensor:
         """Generate valid flags of anchors in a feature map.
 
         Args:
@@ -133,7 +133,7 @@ class MlvlPointGenerator:
     def grid_priors(self,
                     featmap_sizes: List[Tuple],
                     dtype: torch.dtype = torch.float32,
-                    device: DeviceType = 'cuda',
+                    device: DeviceType = 'cpu',
                     with_stride: bool = False) -> List[Tensor]:
         """Generate grid points of multiple feature levels.
 
@@ -174,7 +174,7 @@ class MlvlPointGenerator:
                                  featmap_size: Tuple[int],
                                  level_idx: int,
                                  dtype: torch.dtype = torch.float32,
-                                 device: DeviceType = 'cuda',
+                                 device: DeviceType = 'cpu',
                                  with_stride: bool = False) -> Tensor:
         """Generate grid Points of a single level.
 
@@ -187,7 +187,7 @@ class MlvlPointGenerator:
             level_idx (int): The index of corresponding feature map level.
             dtype (:obj:`dtype`): Dtype of priors. Defaults to torch.float32.
             device (str | torch.device): The device the tensor will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
             with_stride (bool): Concatenate the stride to the last dimension
                 of points.
 
@@ -231,7 +231,7 @@ class MlvlPointGenerator:
     def valid_flags(self,
                     featmap_sizes: List[Tuple[int, int]],
                     pad_shape: Tuple[int],
-                    device: DeviceType = 'cuda') -> List[Tensor]:
+                    device: DeviceType = 'cpu') -> List[Tensor]:
         """Generate valid flags of points of multiple feature levels.
 
         Args:
@@ -263,7 +263,7 @@ class MlvlPointGenerator:
     def single_level_valid_flags(self,
                                  featmap_size: Tuple[int, int],
                                  valid_size: Tuple[int, int],
-                                 device: DeviceType = 'cuda') -> Tensor:
+                                 device: DeviceType = 'cpu') -> Tensor:
         """Generate the valid flags of points of a single feature map.
 
         Args:
@@ -272,7 +272,7 @@ class MlvlPointGenerator:
             valid_size (tuple[int]): The valid size of the feature maps.
                 The size arrange as as (h, w).
             device (str | torch.device): The device where the flags will be
-            put on. Defaults to 'cuda'.
+            put on. Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: The valid flags of each points in a single level \
@@ -294,7 +294,7 @@ class MlvlPointGenerator:
                       featmap_size: Tuple[int],
                       level_idx: int,
                       dtype: torch.dtype = torch.float32,
-                      device: DeviceType = 'cuda') -> Tensor:
+                      device: DeviceType = 'cpu') -> Tensor:
         """Generate sparse points according to the ``prior_idxs``.
 
         Args:

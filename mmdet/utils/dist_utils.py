@@ -65,7 +65,7 @@ def reduce_mean(tensor):
     return tensor
 
 
-def obj2tensor(pyobj, device='cuda'):
+def obj2tensor(pyobj, device='cpu'):
     """Serialize picklable python object to tensor."""
     storage = torch.ByteStorage.from_buffer(pickle.dumps(pyobj))
     return torch.ByteTensor(storage).to(device=device)
@@ -145,7 +145,7 @@ def all_reduce_dict(py_dict, op='sum', group=None, to_float=True):
     return out_dict
 
 
-def sync_random_seed(seed=None, device='cuda'):
+def sync_random_seed(seed=None, device='cpu'):
     """Make sure different ranks share the same seed.
 
     All workers must call this function, otherwise it will deadlock.
@@ -162,7 +162,7 @@ def sync_random_seed(seed=None, device='cuda'):
     Args:
         seed (int, Optional): The seed. Default to None.
         device (str): The device where the seed will be put on.
-            Default to 'cuda'.
+            Default to 'cpu'.
 
     Returns:
         int: Seed to be used.

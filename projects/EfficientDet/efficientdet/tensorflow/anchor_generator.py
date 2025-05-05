@@ -68,7 +68,7 @@ class YXYXAnchorGenerator(AnchorGenerator):
                                  featmap_size: Tuple[int, int],
                                  level_idx: int,
                                  dtype: torch.dtype = torch.float32,
-                                 device: DeviceType = 'cuda') -> Tensor:
+                                 device: DeviceType = 'cpu') -> Tensor:
         """Generate grid anchors of a single level.
 
         Note:
@@ -80,7 +80,7 @@ class YXYXAnchorGenerator(AnchorGenerator):
             dtype (obj:`torch.dtype`): Date type of points.Defaults to
                 ``torch.float32``.
             device (str | torch.device): The device the tensor will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: Anchors in the overall feature maps.

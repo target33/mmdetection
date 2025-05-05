@@ -206,7 +206,7 @@ class SABLRetinaHead(BaseDenseHead):
         self,
         featmap_sizes: List[tuple],
         img_metas: List[dict],
-        device: Union[torch.device, str] = 'cuda'
+        device: Union[torch.device, str] = 'cpu'
     ) -> Tuple[List[List[Tensor]], List[List[Tensor]]]:
         """Get squares according to feature map sizes and guided anchors.
 

@@ -254,7 +254,7 @@ class GuidedAnchorHead(AnchorHead):
     def get_sampled_approxs(self,
                             featmap_sizes: List[Tuple[int, int]],
                             batch_img_metas: List[dict],
-                            device: str = 'cuda') -> tuple:
+                            device: str = 'cpu') -> tuple:
         """Get sampled approxs and inside flags according to feature map sizes.
 
         Args:
@@ -310,7 +310,7 @@ class GuidedAnchorHead(AnchorHead):
                     loc_preds: List[Tensor],
                     batch_img_metas: List[dict],
                     use_loc_filter: bool = False,
-                    device: str = 'cuda') -> tuple:
+                    device: str = 'cpu') -> tuple:
         """Get squares according to feature map sizes and guided anchors.
 
         Args:
@@ -320,7 +320,7 @@ class GuidedAnchorHead(AnchorHead):
             batch_img_metas (list[dict]): Image meta info.
             use_loc_filter (bool): Use loc filter or not. Defaults to False
             device (str): device for returned tensors.
-                Defaults to `cuda`.
+                Defaults to `cpu`.
 
         Returns:
             tuple: square approxs of each image, guided anchors of each image,

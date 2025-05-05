@@ -492,7 +492,7 @@ class RTMDetHead(ATSSHead):
     def get_anchors(self,
                     featmap_sizes: List[tuple],
                     batch_img_metas: List[dict],
-                    device: Union[torch.device, str] = 'cuda') \
+                    device: Union[torch.device, str] = 'cpu') \
             -> Tuple[List[List[Tensor]], List[List[Tensor]]]:
         """Get anchors according to feature map sizes.
 
@@ -500,7 +500,7 @@ class RTMDetHead(ATSSHead):
             featmap_sizes (list[tuple]): Multi-level feature map sizes.
             batch_img_metas (list[dict]): Image meta info.
             device (torch.device or str): Device for returned tensors.
-                Defaults to cuda.
+                Defaults to cpu.
 
         Returns:
             tuple:

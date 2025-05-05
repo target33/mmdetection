@@ -41,13 +41,13 @@ class TestCascadeRoIHead(TestCase):
         for i in range(len(roi_head_cfg.bbox_roi_extractor.featmap_strides)):
             feats.append(
                 torch.rand(1, 1, s // (2**(i + 2)),
-                           s // (2**(i + 2))).to(device='cuda'))
+                           s // (2**(i + 2))).to(device='cpu'))
         feats = tuple(feats)
 
         # When truth is non-empty then both cls, box, and mask loss
         # should be nonzero for random inputs
         img_shape_list = [(3, s, s) for _ in img_metas]
-        proposal_list = demo_mm_proposals(img_shape_list, 100, device='cuda')
+        proposal_list = demo_mm_proposals(img_shape_list, 100, device='cpu')
         # add import elements into proposal
         init_proposal_features = nn.Embedding(100, 256).cuda().weight.clone()
         for proposal in proposal_list:
@@ -60,7 +60,7 @@ class TestCascadeRoIHead(TestCase):
             num_items=[1],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         out = roi_head.loss(feats, proposal_list, batch_data_samples)
         for name, value in out.items():
             if 'loss' in name:
@@ -69,7 +69,7 @@ class TestCascadeRoIHead(TestCase):
 
         # When there is no truth, the cls loss should be nonzero but
         # there should be no box and mask loss.
-        proposal_list = demo_mm_proposals(img_shape_list, 100, device='cuda')
+        proposal_list = demo_mm_proposals(img_shape_list, 100, device='cpu')
         # add import elements into proposal
         init_proposal_features = nn.Embedding(100, 256).cuda().weight.clone()
         for proposal in proposal_list:
@@ -82,7 +82,7 @@ class TestCascadeRoIHead(TestCase):
             num_items=[0],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         out = roi_head.loss(feats, proposal_list, batch_data_samples)
         for name, value in out.items():
             if 'loss_cls' in name:

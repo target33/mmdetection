@@ -153,11 +153,11 @@ class TestStandardRoIHead(TestCase):
             if not with_shared_head:
                 feats.append(
                     torch.rand(1, 1, s // (2**(i + 2)),
-                               s // (2**(i + 2))).to(device='cuda'))
+                               s // (2**(i + 2))).to(device='cpu'))
             else:
                 feats.append(
                     torch.rand(1, 1024, s // (2**(i + 2)),
-                               s // (2**(i + 2))).to(device='cuda'))
+                               s // (2**(i + 2))).to(device='cpu'))
         feats = tuple(feats)
 
         # When truth is non-empty then both cls, box, and mask loss
@@ -169,9 +169,9 @@ class TestStandardRoIHead(TestCase):
             num_items=[1],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         proposals_list = demo_mm_proposals(
-            image_shapes=image_shapes, num_proposals=100, device='cuda')
+            image_shapes=image_shapes, num_proposals=100, device='cpu')
 
         out = roi_head.loss(feats, proposals_list, batch_data_samples)
         loss_cls = out['loss_cls']
@@ -189,9 +189,9 @@ class TestStandardRoIHead(TestCase):
             num_items=[0],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         proposals_list = demo_mm_proposals(
-            image_shapes=image_shapes, num_proposals=100, device='cuda')
+            image_shapes=image_shapes, num_proposals=100, device='cpu')
         out = roi_head.loss(feats, proposals_list, batch_data_samples)
         empty_cls_loss = out['loss_cls']
         empty_bbox_loss = out['loss_bbox']

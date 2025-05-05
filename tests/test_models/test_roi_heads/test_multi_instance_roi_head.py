@@ -92,7 +92,7 @@ class TestMultiInstanceRoIHead(TestCase):
         for i in range(len(roi_head.bbox_roi_extractor.featmap_strides)):
             feats.append(
                 torch.rand(1, 1, s // (2**(i + 2)),
-                           s // (2**(i + 2))).to(device='cuda'))
+                           s // (2**(i + 2))).to(device='cpu'))
         feats = tuple(feats)
 
         # When truth is non-empty then emd loss should be nonzero for
@@ -104,9 +104,9 @@ class TestMultiInstanceRoIHead(TestCase):
             num_items=[1],
             num_classes=4,
             with_mask=False,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         proposals_list = demo_mm_proposals(
-            image_shapes=image_shapes, num_proposals=100, device='cuda')
+            image_shapes=image_shapes, num_proposals=100, device='cpu')
 
         out = roi_head.loss(feats, proposals_list, batch_data_samples)
         loss = out['loss_rcnn_emd']
@@ -119,9 +119,9 @@ class TestMultiInstanceRoIHead(TestCase):
             num_items=[0],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         proposals_list = demo_mm_proposals(
-            image_shapes=image_shapes, num_proposals=100, device='cuda')
+            image_shapes=image_shapes, num_proposals=100, device='cpu')
         out = roi_head.loss(feats, proposals_list, batch_data_samples)
         empty_loss = out['loss_rcnn_emd']
         self.assertEqual(

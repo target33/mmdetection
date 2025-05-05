@@ -37,7 +37,7 @@ class TestTridentRoIHead(TestCase):
         for i in range(len(roi_head.bbox_roi_extractor.featmap_strides)):
             feats.append(
                 torch.rand(1, 1024, s // (2**(i + 2)),
-                           s // (2**(i + 2))).to(device='cuda'))
+                           s // (2**(i + 2))).to(device='cpu'))
 
         image_shapes = [(3, s, s)]
         batch_data_samples = demo_mm_inputs(
@@ -46,9 +46,9 @@ class TestTridentRoIHead(TestCase):
             num_items=[0],
             num_classes=4,
             with_mask=True,
-            device='cuda')['data_samples']
+            device='cpu')['data_samples']
         proposals_list = demo_mm_proposals(
-            image_shapes=image_shapes, num_proposals=100, device='cuda')
+            image_shapes=image_shapes, num_proposals=100, device='cpu')
         # When `test_branch_idx == 1`
         roi_head.predict(feats, proposals_list, batch_data_samples)
         # When `test_branch_idx == -1`

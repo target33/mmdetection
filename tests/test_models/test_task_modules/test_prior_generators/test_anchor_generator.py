@@ -72,11 +72,11 @@ def test_standard_points_generator():
 
         # assert self.num_levels == len(featmap_sizes)
         with pytest.raises(AssertionError):
-            mlvl_points.grid_priors(featmap_sizes=[(2, 2)], device='cuda')
+            mlvl_points.grid_priors(featmap_sizes=[(2, 2)], device='cpu')
         priors = mlvl_points.grid_priors(
-            featmap_sizes=[(2, 2), (4, 8)], device='cuda')
+            featmap_sizes=[(2, 2), (4, 8)], device='cpu')
         priors_with_stride = mlvl_points.grid_priors(
-            featmap_sizes=[(2, 2), (4, 8)], with_stride=True, device='cuda')
+            featmap_sizes=[(2, 2), (4, 8)], with_stride=True, device='cpu')
         assert len(priors) == 2
 
         # assert last dimension is (coord_x, coord_y, stride_w, stride_h).
@@ -98,7 +98,7 @@ def test_standard_points_generator():
 
         # assert the offset of 0.5 * stride
         priors_half_offset = mlvl_points_half_stride_generator.grid_priors(
-            featmap_sizes=[(2, 2), (4, 8)], device='cuda')
+            featmap_sizes=[(2, 2), (4, 8)], device='cpu')
 
         assert (priors_half_offset[0][0] - priors[0][0]).sum() == 4 * 0.5 * 2
         assert (priors_half_offset[1][0] - priors[1][0]).sum() == 10 * 0.5 * 2
@@ -192,18 +192,18 @@ def test_sparse_prior():
 
         featmap_sizes = [(6, 8), (6, 4)]
         grid_anchors = mlvl_points.grid_priors(
-            featmap_sizes=featmap_sizes, with_stride=False, device='cuda')
+            featmap_sizes=featmap_sizes, with_stride=False, device='cpu')
         sparse_prior = mlvl_points.sparse_priors(
             prior_idxs=prior_indexs,
             featmap_size=featmap_sizes[0],
             level_idx=0,
-            device='cuda')
+            device='cpu')
         assert (sparse_prior == grid_anchors[0][prior_indexs]).all()
         sparse_prior = mlvl_points.sparse_priors(
             prior_idxs=prior_indexs,
             featmap_size=featmap_sizes[1],
             level_idx=1,
-            device='cuda')
+            device='cpu')
         assert (sparse_prior == grid_anchors[1][prior_indexs]).all()
         assert sparse_prior.is_cuda
         mlvl_anchors = AnchorGenerator(
@@ -216,18 +216,18 @@ def test_sparse_prior():
 
         featmap_sizes = [(13, 5), (16, 4)]
         grid_anchors = mlvl_anchors.grid_priors(
-            featmap_sizes=featmap_sizes, device='cuda')
+            featmap_sizes=featmap_sizes, device='cpu')
         sparse_prior = mlvl_anchors.sparse_priors(
             prior_idxs=prior_indexs,
             featmap_size=featmap_sizes[0],
             level_idx=0,
-            device='cuda')
+            device='cpu')
         assert (sparse_prior == grid_anchors[0][prior_indexs]).all()
         sparse_prior = mlvl_anchors.sparse_priors(
             prior_idxs=prior_indexs,
             featmap_size=featmap_sizes[1],
             level_idx=1,
-            device='cuda')
+            device='cpu')
         assert (sparse_prior == grid_anchors[1][prior_indexs]).all()
 
         # for ssd
@@ -241,13 +241,13 @@ def test_sparse_prior():
             strides=[8, 16, 32],
             ratios=[[2], [2, 3], [2, 3]])
         ssd_anchors = anchor_generator.grid_anchors(
-            featmap_sizes, device='cuda')
+            featmap_sizes, device='cpu')
         for i in range(len(featmap_sizes)):
             sparse_ssd_anchors = anchor_generator.sparse_priors(
                 prior_idxs=prior_indexs,
                 level_idx=i,
                 featmap_size=featmap_sizes[i],
-                device='cuda')
+                device='cpu')
             assert (sparse_ssd_anchors == ssd_anchors[i][prior_indexs]).all()
 
         # for yolo
@@ -262,13 +262,13 @@ def test_sparse_prior():
                 [(10, 13), (16, 30), (33, 23)],
             ])
         yolo_anchors = anchor_generator.grid_anchors(
-            featmap_sizes, device='cuda')
+            featmap_sizes, device='cpu')
         for i in range(len(featmap_sizes)):
             sparse_yolo_anchors = anchor_generator.sparse_priors(
                 prior_idxs=prior_indexs,
                 level_idx=i,
                 featmap_size=featmap_sizes[i],
-                device='cuda')
+                device='cpu')
             assert (sparse_yolo_anchors == yolo_anchors[i][prior_indexs]).all()
 
 

@@ -230,7 +230,7 @@ class AnchorGenerator:
     def grid_priors(self,
                     featmap_sizes: List[Tuple],
                     dtype: torch.dtype = torch.float32,
-                    device: DeviceType = 'cuda') -> List[Tensor]:
+                    device: DeviceType = 'cpu') -> List[Tensor]:
         """Generate grid anchors in multiple feature levels.
 
         Args:
@@ -260,7 +260,7 @@ class AnchorGenerator:
                                  featmap_size: Tuple[int, int],
                                  level_idx: int,
                                  dtype: torch.dtype = torch.float32,
-                                 device: DeviceType = 'cuda') -> Tensor:
+                                 device: DeviceType = 'cpu') -> Tensor:
         """Generate grid anchors of a single level.
 
         Note:
@@ -272,7 +272,7 @@ class AnchorGenerator:
             dtype (obj:`torch.dtype`): Date type of points.Defaults to
                 ``torch.float32``.
             device (str | torch.device): The device the tensor will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: Anchors in the overall feature maps.
@@ -305,7 +305,7 @@ class AnchorGenerator:
                       featmap_size: Tuple[int, int],
                       level_idx: int,
                       dtype: torch.dtype = torch.float32,
-                      device: DeviceType = 'cuda') -> Tensor:
+                      device: DeviceType = 'cpu') -> Tensor:
         """Generate sparse anchors according to the ``prior_idxs``.
 
         Args:
@@ -337,7 +337,7 @@ class AnchorGenerator:
 
     def grid_anchors(self,
                      featmap_sizes: List[Tuple],
-                     device: DeviceType = 'cuda') -> List[Tensor]:
+                     device: DeviceType = 'cpu') -> List[Tensor]:
         """Generate grid anchors in multiple feature levels.
 
         Args:
@@ -371,7 +371,7 @@ class AnchorGenerator:
                                   base_anchors: Tensor,
                                   featmap_size: Tuple[int, int],
                                   stride: Tuple[int, int] = (16, 16),
-                                  device: DeviceType = 'cuda') -> Tensor:
+                                  device: DeviceType = 'cpu') -> Tensor:
         """Generate grid anchors of a single level.
 
         Note:
@@ -383,7 +383,7 @@ class AnchorGenerator:
             stride (tuple[int, int]): Stride of the feature map in order
                 (w, h). Defaults to (16, 16).
             device (str | torch.device): Device the tensor will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: Anchors in the overall feature maps.
@@ -415,7 +415,7 @@ class AnchorGenerator:
     def valid_flags(self,
                     featmap_sizes: List[Tuple[int, int]],
                     pad_shape: Tuple,
-                    device: DeviceType = 'cuda') -> List[Tensor]:
+                    device: DeviceType = 'cpu') -> List[Tensor]:
         """Generate valid flags of anchors in multiple feature levels.
 
         Args:
@@ -447,7 +447,7 @@ class AnchorGenerator:
                                  featmap_size: Tuple[int, int],
                                  valid_size: Tuple[int, int],
                                  num_base_anchors: int,
-                                 device: DeviceType = 'cuda') -> Tensor:
+                                 device: DeviceType = 'cpu') -> Tensor:
         """Generate the valid flags of anchor in a single feature map.
 
         Args:
@@ -456,7 +456,7 @@ class AnchorGenerator:
             valid_size (tuple[int]): The valid size of the feature maps.
             num_base_anchors (int): The number of base anchors.
             device (str | torch.device): Device where the flags will be put on.
-                Defaults to 'cuda'.
+                Defaults to 'cpu'.
 
         Returns:
             torch.Tensor: The valid flags of each anchor in a single level \

@@ -577,7 +577,7 @@ class VFNetHead(ATSSHead, FCOSHead):
     def get_anchors(self,
                     featmap_sizes: List[Tuple],
                     batch_img_metas: List[dict],
-                    device: str = 'cuda') -> tuple:
+                    device: str = 'cpu') -> tuple:
         """Get anchors according to feature map sizes.
 
         Args:
